@@ -24,23 +24,21 @@
 
 ##### 基岩版
 
-`Title: {status.motd}-{status.map}`
-
-`Version: {status.version.brand}{status.version.version}`
-
-`Players: {status.players_online}/{status.players_max}`
-
-`Gamemode: {status.gamemode}`
+```
+Title: {status.motd}-{status.map}
+Version: {status.version.brand}{status.version.version}
+Players: {status.players_online}/{status.players_max}
+Gamemode: {status.gamemode}
+```
 
 ##### Java版
 
-`Title: {cut_title}`
-
-`Description: {cut_dc}	#当 status.description 中含有\n时，将以此切分为 Title 与 Description ，并自动去除首尾空格；反之仅有Title`
-
-`Version: {status.version.name}`
-
-`Players: {status.players.online}/{status.players.max}`
+```
+Title: {cut_title}
+Description: {cut_dc}	#当 status.description 中含有\n时，将以此切分为 Title 与 Description ，并自动去除首尾空格；反之仅有Title
+Version: {status.version.name}
+Players: {status.players.online}/{status.players.max}
+```
 
 #### 帮助接入
 
