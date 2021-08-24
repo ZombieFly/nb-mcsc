@@ -1,51 +1,47 @@
-# Nonebot Plugin MCStatus
+### 本仓库Fork自[Nonebot Plugin MCStatus](https://github.com/nonepkg/nonebot-plugin-mcstatus)
 
 基于 [nonebot2](https://github.com/nonebot/nonebot2) 和 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) 的 Minecraft 服务器状态查询插件
 
-[![License](https://img.shields.io/github/license/Jigsaw111/nonebot_plugin_mcstatus)](LICENSE)
-![Python Version](https://img.shields.io/badge/python-3.7.3+-blue.svg)
-![NoneBot Version](https://img.shields.io/badge/nonebot-2.0.0a11+-red.svg)
-![Pypi Version](https://img.shields.io/pypi/v/nonebot-plugin-mcstatus.svg)
-
 ### 安装
 
-#### 从 PyPI 安装（推荐）
+#### 克隆此仓库至Nonebot生成的`plugins`文件夹中
 
-- 使用 nb-cli  
+`git clone https://github.com/ZombieFly/nonebot_plugin_mcstatus.git`
 
-```
-nb plugin install nonebot_plugin_mcstatus
-```
+### 命令格式
 
-- 使用 poetry
+`/mcs add <name> <address>`为所在群添加一个服务器记录，在不指定端口时，将依次检查基岩版服务器与Java版服务器默认端口上是否有开放服务器，如果存在，将连同服务器类型一同记录
 
-```
-poetry add nonebot_plugin_mcstatus
-```
+`/mcs list`  展示所在群服务器记录
 
-- 使用 pip
+`/mcs remove <name>`  删除对应服务器
 
-```
-pip install nonebot_plugin_mcstatus
-```
+`/mcs ping <name>` 检查对应服务器的状态（仅依照添加时记录的服务器类型检查）
 
-#### 从 GitHub 安装（不推荐）
+`/mcs p` 检查列表第一个服务器的状态
 
-```
-git clone https://github.com/Jigsaw111/nonebot_plugin_mcstatus.git
-```
+#### 服务器状态返回样式
 
-### 使用
+##### 基岩版
 
-**使用前请先确保命令前缀为空，否则请在以下命令前加上命令前缀 (默认为 `/` )。**
+`Title: {status.motd}-{status.map}`
 
-- `mc list` 查看当前会话（群/私聊）的关注服务器列表
-- `mc add server address` 添加服务器到当前会话（群/私聊）的关注服务器列表
-- `mc remvoe server` 从当前会话（群/私聊）的关注服务器列表移除服务器
-- `mc check address` 查看指定地址的服务器状态（一次性）
+`Version: {status.version.brand}{status.version.version}`
 
-### Bug
+`Players: {status.players_online}/{status.players_max}`
 
-### To Do
+`Gamemode: {status.gamemode}`
 
-### Changelog
+##### Java版
+
+`Title: {cut_title}`
+
+`Description: {cut_dc}	#当 status.description 中含有\n时，将以此切分为 Title 与 Description ，并自动去除首尾空格；反之仅有Title`
+
+`Version: {status.version.name}`
+
+`Players: {status.players.online}/{status.players.max}`
+
+#### 帮助接入
+
+已接入[nonebot-plugin-help](https://github.com/XZhouQD/nonebot-plugin-help)

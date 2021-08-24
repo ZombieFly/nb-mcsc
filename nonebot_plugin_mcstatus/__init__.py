@@ -42,3 +42,16 @@ async def _(bot: Bot, event: MessageEvent, state: T_State):
                 except AttributeError:
                     await bot.send(event, "未知命令")
                 
+# nonebot_help
+
+__usage__ = '''Minecraft Server Checker
+/mcs add <name> <address>  #为本群记录一个服务器，将自动判断服务器类型（形如/mcs add demo example.org）
+/mcs list  # 展示本群已记录服务器列表
+/mcs remove <name>  # 删除对应服务器
+/mcs ping <name>  # 检查对应服务器的状态
+/mcs p  # 检查列表第一个服务器的状态
+'''
+
+__version__ = '0.1.0'
+
+__plugin_name__ = "Minecraft Server Checker"
