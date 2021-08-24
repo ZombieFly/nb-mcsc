@@ -1,3 +1,4 @@
+from mcstatus import server
 import yaml
 from pathlib import Path
 from typing import Optional, Union, List, Dict
@@ -7,7 +8,8 @@ from pydantic import BaseModel
 class Server(BaseModel):
     name: str
     address: str
-    status: bool
+    s_type: str
+    ex_open: bool
 
 
 ServerList = Dict[str, Dict[int, List[Server]]]
@@ -17,7 +19,8 @@ class Data:
     __server_list: ServerList = {"user": {}, "group": {}}
     __path: Path
 
-    def __init__(self, path: Path = Path() / "data" / "mcstatus" / "server_list.yml"):
+    def __init__(self, path: Path = Path() /
+                 "data" / "mc_server_status" / "server_list.yml"):
         self.__path = path
         self.__load()
 
