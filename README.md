@@ -20,9 +20,9 @@
 
 `/mcs p` 检查列表第一个服务器的状态
 
-#### 服务器状态返回样式
+### 服务器状态返回样式
 
-##### 基岩版
+#### 基岩版
 
 ```
 Title: {status.motd}-{status.map}
@@ -31,7 +31,7 @@ Players: {status.players_online}/{status.players_max}
 Gamemode: {status.gamemode}
 ```
 
-##### Java版
+#### Java版
 
 ```
 Title: {cut_title}
@@ -40,6 +40,10 @@ Version: {status.version.name}
 Players: {status.players.online}/{status.players.max}
 ```
 
-#### 帮助接入
+### 帮助接入
 
 已接入[nonebot-plugin-help](https://github.com/XZhouQD/nonebot-plugin-help)
+
+### TODO
+
+- [ ] 置顶服务器
