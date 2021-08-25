@@ -48,5 +48,6 @@ Players: {status.players.online}/{status.players.max}
 
 ### TODO
 
+- [ ] 异步调用检查
 - [ ] 设置置顶服务器
 - [ ] 服务器开放探索（公开）
