@@ -2,8 +2,13 @@ import socket
 import re
 
 from mcstatus import (
+<<<<<<< HEAD
     MinecraftServer as ms,
     MinecraftBedrockServer as mbs
+=======
+    JavaServer as js,
+    BedrockServer as bs
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
     )
 
 from .data import Server, Data
@@ -31,9 +36,15 @@ def put_status(s_type: str, status: str):
                     (
                         f"Title: {cut_title}\n"
                         + f"Description: {cut_dc}\n"
+<<<<<<< HEAD
                             )if '\n' in status.description else (
                             f'Tilte: {status.description}\n'
                         )
+=======
+                    )if '\n' in status.description else (
+                        f'Tilte: {status.description}\n'
+                    )
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
                 )
                 + f"Version: {status.version.name}\n"
                 + f"Players: {status.players.online}/{status.players.max}"
@@ -54,20 +65,34 @@ class Admin_Handle:
     @classmethod
     async def add(cls, args: Namespace) -> str:
         try:
+<<<<<<< HEAD
             mbs.lookup(args.address).status(timeout=1.5)
+=======
+            bs.lookup(args.address, 1.5).status()
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
             s_type = 'BE'
         except socket.gaierror:
             s_type = '域名解析失败，请检查输入是否正确'
         except socket.timeout:
             try:
+<<<<<<< HEAD
                 ms.lookup(args.address).status()
+=======
+                js.lookup(args.address).status()
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
                 s_type = 'JE'
             except socket.timeout:
                 s_type = '未找到处于开放状态的BE/JE服务器'
             except Exception as err:
+<<<<<<< HEAD
                 return f'发生出乎意料的错误:{err}'
         except Exception as err:
             return f'发生出乎意料的错误:{err}'
+=======
+                return f'发生出乎意料的错误\n{err}'
+        except Exception as err:
+            return f'发生出乎意料的错误\n{err}'
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
 
         if s_type in ['BE', 'JE']:
             Data().add_server(
@@ -85,11 +110,19 @@ class Admin_Handle:
             return s_type
 
     @classmethod
+<<<<<<< HEAD
     async def remove(cls, args: Namespace) -> str:
         Data().remove_server(args.name, args.user_id, args.group_id)
 
         return "移除服务器成功！"
 '''
+=======
+    async def rm(cls, args: Namespace) -> str:
+        Data().remove_server(args.name, args.user_id, args.group_id)
+
+        return "移除服务器成功！"
+
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
     @classmethod
     async def top(cls, args: Namespace) -> str:
         server_list = Data().get_server_list(args.user_id, args.group_id)
@@ -102,7 +135,11 @@ class Admin_Handle:
             return f"成功置顶{obj.name}({obj.address})"
         else:
             return "没有找到对应该名称的已记录服务器"
+<<<<<<< HEAD
 '''
+=======
+
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
 
 class Anyone_Handle():
     @classmethod
@@ -134,14 +171,24 @@ class Anyone_Handle():
 
                 try:
                     status = (
+<<<<<<< HEAD
                         ms.lookup(address).status()
                         if s_type == 'JE' else
                         mbs.lookup(address).status(timeout=1)
+=======
+                        js.lookup(address).status()
+                        if s_type == 'JE' else
+                        bs.lookup(address, 3).status()
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
                         )
                 except socket.timeout:
                     status = False
                 except Exception as err:
+<<<<<<< HEAD
                     return f'发生出乎意料的错误:{err}'
+=======
+                    return f'发生出乎意料的错误\n{err}'
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
                 return (
                     put_status(s_type, status)
                     if status else "获取状态失败"
@@ -149,12 +196,17 @@ class Anyone_Handle():
             else:
                 return "没有找到对应该名称的已记录服务器"
         except Exception as err:
+<<<<<<< HEAD
             print(err)
+=======
+            return f'发生出乎意料的错误\n{err}'
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
 
     @classmethod
     async def p(cls, args: Namespace) -> str:
         server_list = Data().get_server_list(args.user_id, args.group_id)
         if server_list:
+<<<<<<< HEAD
             address = server_list[-1].address
             s_type = server_list[-1].s_type
             try:
@@ -162,11 +214,24 @@ class Anyone_Handle():
                     ms.lookup(address).status()
                     if s_type == 'JE' else
                     mbs.lookup(address).status(timeout=1)
+=======
+            address = server_list[0].address
+            s_type = server_list[0].s_type
+            try:
+                status = (
+                    js.lookup(address).status()
+                    if s_type == 'JE' else
+                    bs.lookup(address, 3).status()
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
                     )
             except socket.timeout:
                 status = False
             except Exception as err:
+<<<<<<< HEAD
                 return f'发生出乎意料的错误:{err}'
+=======
+                return f'发生出乎意料的错误\n{err}'
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
             return (
                 put_status(s_type, status)
                 if status else "获取状态失败"

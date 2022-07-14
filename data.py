@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 from mcstatus import server
+=======
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
 import yaml
 from pathlib import Path
 from typing import Optional, Union, List, Dict
@@ -19,8 +22,12 @@ class Data:
     __server_list: ServerList = {"user": {}, "group": {}}
     __path: Path
 
+<<<<<<< HEAD
     def __init__(self, path: Path = Path() /
                  "data" / "mc_server_status" / "server_list.yml"):
+=======
+    def __init__(self, path: Path = Path() / "data" / "mc_server_status" / "server_list.yml"):
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
         self.__path = path
         self.__load()
 
@@ -87,6 +94,25 @@ class Data:
 
         self.__dump()
 
+<<<<<<< HEAD
+=======
+    def top_server(
+        self,
+        name: str,
+        user_id: Optional[int] = None,
+        group_id: Optional[int] = None,
+    ):
+        server_list = self.get_server_list(user_id, group_id)
+        print(range(len(server_list)))
+        for ser_index in range(len(server_list)):
+            if name == server_list[ser_index].name:
+                point = server_list[ser_index]
+                top_data = server_list[point]
+                top_data += server_list.pop(point)
+        self.__dump()
+        return top_data
+
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
     def __load(self):
         try:
             server_list = yaml.safe_load(self.__path.open("r", encoding="utf-8"))

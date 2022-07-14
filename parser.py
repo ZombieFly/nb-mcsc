@@ -27,7 +27,12 @@ add.add_argument("address")
 remove = subparsers.add_parser("remove", help="remove server")
 remove.add_argument("name")
 
+<<<<<<< HEAD
 top =subparsers.add_parser("top", help="set a top server")
 top.add_parser("name")
+=======
+top = subparsers.add_parser("top", help="set a top server")
+top.add_argument("name")
+>>>>>>> 8307a93 (适配mcstatus 9.2.0)
 
 list = subparsers.add_parser("list", help="show server list")
