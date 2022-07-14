@@ -1,4 +1,4 @@
-### 本仓库Fork自[Nonebot Plugin MCStatus](https://github.com/nonepkg/nonebot-plugin-mcstatus)
+### 本项目基于[Nonebot Plugin MCStatus](https://github.com/nonepkg/nonebot-plugin-mcstatus)修改，实现不同的需求
 
 基于 [nonebot2](https://github.com/nonebot/nonebot2) 和 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) 的 Minecraft 服务器状态查询插件
 
@@ -6,7 +6,7 @@
 
 #### 克隆此仓库至Nonebot生成的`plugins`文件夹中
 
-`git clone https://github.com/ZombieFly/nonebot_plugin_mcstatus.git`
+`git clone https://github.com/ZombieFly/nb-mcsc.git`
 
 ### 命令格式
 
@@ -14,7 +14,7 @@
 
 `/mcs list`  展示所在群服务器记录
 
-`/mcs remove <name>`  删除对应服务器
+`/mcs rm <name>`  删除对应服务器
 
 `/mcs ping <name>` 检查对应服务器的状态（仅依照添加时记录的服务器类型检查）
 
