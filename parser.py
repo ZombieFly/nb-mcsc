@@ -24,7 +24,7 @@ add = subparsers.add_parser("add", help="add server")
 add.add_argument("name")
 add.add_argument("address")
 
-remove = subparsers.add_parser("remove", help="remove server")
+remove = subparsers.add_parser("rm", help="remove server")
 remove.add_argument("name")
 
 top = subparsers.add_parser("top", help="set a top server")
