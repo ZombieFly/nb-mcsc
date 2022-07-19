@@ -1,4 +1,5 @@
 import asyncio
+from audioop import add
 import socket
 import re
 
@@ -129,7 +130,8 @@ class Anyone_Handle():
 
     @classmethod
     async def do_ping(cls, address, s_type):
-        err_info = '获取状态失败'
+        if not address:
+            return '需要在后面加上目标服务器地址呢'
         try:
             if s_type == 'JE':
                 target = await js.async_lookup(address)
@@ -141,7 +143,9 @@ class Anyone_Handle():
                 raise UnknowServerType(s_type)
         except (asyncio.exceptions.TimeoutError, ConnectionRefusedError):
             #je超时 或 be连接被拒绝
-            return err_info
+            return '获取状态失败'
+        except socket.gaierror:
+            return '域名解析失败，请检查输入是否正确'
         else:
             return put_status(s_type, status)
 
