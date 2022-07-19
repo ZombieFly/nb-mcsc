@@ -1,3 +1,4 @@
+import asyncio
 import socket
 import re
 
@@ -8,6 +9,14 @@ from mcstatus import (
 
 from .data import Server, Data
 from .parser import Namespace
+
+
+class UnknowServerType(ValueError):
+    def __init__(self,ErrorInfo):
+        super().__init__(self)
+        self.error_info=f'未知的服务器类型"{ErrorInfo}"，该值应为"JE"与"BE"中的其中一个'
+    def __str__(self):
+        return self.error_info
 
 
 def put_status(s_type: str, status: str):
@@ -119,6 +128,24 @@ class Anyone_Handle():
         return result
 
     @classmethod
+    async def do_ping(cls, address, s_type):
+        err_info = '获取状态失败'
+        try:
+            if s_type == 'JE':
+                target = await js.async_lookup(address)
+                status = await target.async_status()
+            elif s_type == 'BE':
+                target = bs.lookup(address)
+                status = await target.async_status()
+            else:
+                raise UnknowServerType(s_type)
+        except (asyncio.exceptions.TimeoutError, ConnectionRefusedError):
+            #je超时 或 be连接被拒绝
+            return err_info
+        else:
+            return put_status(s_type, status)
+
+    @classmethod
     async def ping(cls, args: Namespace) -> str:
         try:
             server_list = Data().get_server_list(args.user_id, args.group_id)
@@ -130,21 +157,9 @@ class Anyone_Handle():
                     if args.name == server.name:
                         address = server.address
                         s_type = server.s_type
-
-                try:
-                    status = (
-                        js.lookup(address).status()
-                        if s_type == 'JE' else
-                        bs.lookup(address, 3).status()
-                        )
-                except socket.timeout:
-                    status = False
-                except Exception as err:
-                    return f'发生出乎意料的错误\n{err}'
-                return (
-                    put_status(s_type, status)
-                    if status else "获取状态失败"
-                    )
+                        break
+                result = await cls.do_ping(address, s_type)
+                return result
             else:
                 return "没有找到对应该名称的已记录服务器"
         except Exception as err:
