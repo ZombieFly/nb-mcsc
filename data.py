@@ -18,7 +18,10 @@ class Data:
     __server_list: ServerList = {"user": {}, "group": {}}
     __path: Path
 
-    def __init__(self, path: Path = Path() / "data" / "mc_server_status" / "server_list.yml"):
+    def __init__(
+        self,
+        path: Path = Path() / "data" / "mc_server_status" / "server_list.yml"
+    ):
         self.__path = path
         self.__load()
 
@@ -103,7 +106,8 @@ class Data:
 
     def __load(self):
         try:
-            server_list = yaml.safe_load(self.__path.open("r", encoding="utf-8"))
+            server_list = yaml.safe_load(
+                self.__path.open("r", encoding="utf-8"))
             for type in server_list:
                 for id in server_list[type]:
                     self.__server_list[type][id] = [

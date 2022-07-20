@@ -6,7 +6,6 @@ from nonebot.adapters.onebot.v11 import (
     GroupMessageEvent,
     MessageSegment
 )
-from tomlkit import key
 
 from .parser import mc_parser, ArgNamespace
 from .handle import Admin_Handle, Anyone_Handle
@@ -17,15 +16,21 @@ mcs = on_shell_command("mcs", parser=mc_parser, priority=5)
 bep = on_command("bep", aliases={"beping"})
 jep = on_command("jep", aliases={"jeping"})
 
-def quote(event:MessageEvent, output:str) -> list[MessageSegment]:
+
+def quote(event: MessageEvent, output: str) -> list[MessageSegment]:
     """给消息包装上“回复”
     """
-    return MessageSegment.reply(id_=event.message_id) + MessageSegment.text(output)
+    return MessageSegment.reply(
+        id_=event.message_id
+    ) + MessageSegment.text(output)
+
 
 @mcs.handle()
 async def _(event: MessageEvent,  args: ArgNamespace = ShellCommandArgs()):
-    args.user_id = event.user_id if isinstance(event, PrivateMessageEvent) else None
-    args.group_id = event.group_id if isinstance(event, GroupMessageEvent) else None
+    args.user_id = event.user_id if isinstance(
+        event, PrivateMessageEvent) else None
+    args.group_id = event.group_id if isinstance(
+        event, GroupMessageEvent) else None
     args.is_admin = (
         event.sender.role in ["admin", "owner"]
         if isinstance(event, GroupMessageEvent)
@@ -33,26 +38,34 @@ async def _(event: MessageEvent,  args: ArgNamespace = ShellCommandArgs()):
     )
     if hasattr(args, "handle"):
         try:
-            #优先尝试执行Anyone权限命令
+            # 优先尝试执行Anyone权限命令
             result = await getattr(Anyone_Handle, args.handle)(args)
             if result:
                 await mcs.finish(quote(event, result))
         except AttributeError:
             if args.is_admin:
-                #尝试执行Admin权限命令
+                # 尝试执行Admin权限命令
                 result = await getattr(Admin_Handle, args.handle)(args)
                 if result:
                     await mcs.finish(quote(event, result))
             await mcs.finish(quote(event, '不存在对应命令，请检查命令是否存在，或者是否具有相应执行权限'))
 
+
 @bep.handle()
-async def _bep(event:MessageEvent, keywd= CommandArg()):
-    result = await Anyone_Handle.do_ping(keywd.extract_plain_text(), s_type="BE")
+async def _bep(event: MessageEvent, keywd=CommandArg()):
+    result = await Anyone_Handle.do_ping(
+        keywd.extract_plain_text(),
+        s_type="BE"
+    )
     await bep.finish(quote(event, result))
 
+
 @jep.handle()
-async def _jep(event:MessageEvent, keywd= CommandArg()):
-    result = await Anyone_Handle.do_ping(keywd.extract_plain_text(), s_type="JE")
+async def _jep(event: MessageEvent, keywd=CommandArg()):
+    result = await Anyone_Handle.do_ping(
+        keywd.extract_plain_text(),
+        s_type="JE"
+    )
     await jep.finish(quote(event, result))
 
 # nonebot_help

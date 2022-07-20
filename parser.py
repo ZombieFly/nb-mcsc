@@ -2,7 +2,6 @@ from argparse import Namespace as ArgNamespace
 
 from nonebot.rule import ArgumentParser
 
-from .data import Data
 
 class Namespace(ArgNamespace):
     user_id: int
